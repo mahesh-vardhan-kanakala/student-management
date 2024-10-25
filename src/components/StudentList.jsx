@@ -24,21 +24,21 @@ function StudentList() {
   const studentKeys = Object.keys(groupedStudents);
 
   return (
-    <div className="student-list-container">
-      <h2 className="student-list-header">Student List</h2>
+    <div>
+      {/* Removed nav section */}
+
       <input
         type="text"
         placeholder="Search students..."
-        className="search-input"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
       {studentKeys.length > 0 ? (
         studentKeys.map((className) => (
-          <section key={className} className="class-section">
-            <h3>Class: {className}</h3>
-            <table className="student-table">
+          <section key={className}>
+            <h2>Class: {className}</h2>
+            <table>
               <thead>
                 <tr>
                   <th>Name</th>
@@ -52,7 +52,7 @@ function StudentList() {
                     <td>{student.name || 'N/A'}</td>
                     <td>{student.email || 'N/A'}</td>
                     <td>
-                      <Link to={`/students/${student.id}`} className="view-link">View</Link>
+                      <Link to={`/students/${student.id}`}>View</Link>
                     </td>
                   </tr>
                 ))}

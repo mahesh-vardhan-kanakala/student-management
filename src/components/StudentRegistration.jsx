@@ -1,7 +1,19 @@
 import React, { useState, useContext } from 'react';
-import { StudentContext } from '../context/StudentContext';
+import { StudentContext } from '../context/StudentContext'; 
+import { useNavigate } from 'react-router-dom'; 
+import PropTypes from 'prop-types';
 
-function StudentRegistration() {
+// Error message component
+const ErrorMessage = ({ message }) => {
+  return <p className="FieldError">{message}</p>;
+};
+
+// Prop types validation
+ErrorMessage.propTypes = {
+  message: PropTypes.string.isRequired,
+};
+
+const StudentRegistration = () => {
   const { addStudent } = useContext(StudentContext);
   const [student, setStudent] = useState({
     name: '',
@@ -9,96 +21,106 @@ function StudentRegistration() {
     age: '',
     class: '',
     address: '',
-    phone: ''
+    phone: '',
   });
+  const [error, setError] = useState('');
+  const [isTouched, setIsTouched] = useState({
+    email: false,
+    phone: false,
+  });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setStudent({ ...student, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setStudent((prevStudent) => ({ ...prevStudent, [name]: value }));
+    setError(''); // Reset error on input change
+  };
+
+  const validateForm = () => {
+    const { email, phone } = student;
+
+    if (Object.values(student).some(field => !field)) {
+      return 'Please fill in all fields';
+    }
+
+    // Basic email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      return 'Please enter a valid email';
+    }
+
+    // Phone number validation
+    const phonePattern = /^\d{10}$/; // Adjust according to your requirements
+    if (!phonePattern.test(phone)) {
+      return 'Please enter a valid 10-digit phone number';
+    }
+
+    return '';
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Basic validation (you can expand this as needed)
-    if (!student.name || !student.email || !student.age || !student.class || !student.address || !student.phone) {
-      alert('Please fill in all fields');
+
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
     addStudent(student);
-    // Reset form after submission
+    clearForm();
+    navigate('/success'); // Redirect to a success page
+  };
+
+  const clearForm = () => {
     setStudent({
       name: '',
       email: '',
       age: '',
       class: '',
       address: '',
-      phone: ''
+      phone: '',
     });
+    setIsTouched({ email: false, phone: false });
   };
 
   return (
-    <div className="registration-container">
-      <h2>Register Student</h2>
-      <form onSubmit={handleSubmit} className="registration-form">
-        <input
-          type="text"
-          name="name"
-          value={student.name}
-          onChange={handleChange}
-          placeholder="Name"
-          required
-          className="form-input"
-        />
-        <input
-          type="email"
-          name="email"
-          value={student.email}
-          onChange={handleChange}
-          placeholder="Email"
-          required
-          className="form-input"
-        />
-        <input
-          type="number"
-          name="age"
-          value={student.age}
-          onChange={handleChange}
-          placeholder="Age"
-          required
-          className="form-input"
-        />
-        <input
-          type="text"
-          name="class"
-          value={student.class}
-          onChange={handleChange}
-          placeholder="Class"
-          required
-          className="form-input"
-        />
-        <input
-          type="text"
-          name="address"
-          value={student.address}
-          onChange={handleChange}
-          placeholder="Address"
-          required
-          className="form-input"
-        />
-        <input
-          type="text"
-          name="phone"
-          value={student.phone}
-          onChange={handleChange}
-          placeholder="Phone"
-          required
-          className="form-input"
-        />
-        <button type="submit" className="submit-button">Register Student</button>
+    <div className="student-registration">
+      <form onSubmit={handleSubmit}>
+        <fieldset>
+          <h2>Register Student</h2>
+
+          {error && <ErrorMessage message={error} />}
+          
+          {/** Form Fields */}
+          {Object.entries(student).map(([key, value]) => (
+            <div className="Field" key={key}>
+              <label>
+                {key.charAt(0).toUpperCase() + key.slice(1)} {key === 'name' && <sup>*</sup>}
+              </label>
+              <input
+                type={key === 'age' ? 'number' : 'text'}
+                name={key}
+                value={value}
+                onChange={handleChange}
+                onBlur={() => setIsTouched((prev) => ({ ...prev, [key]: true }))}
+                placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+              />
+              {isTouched.email && key === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && (
+                <ErrorMessage message="Please enter a valid email" />
+              )}
+              {isTouched.phone && key === 'phone' && !/^\d{10}$/.test(value) && (
+                <ErrorMessage message="Please enter a valid 10-digit phone number" />
+              )}
+            </div>
+          ))}
+
+          <button type="submit">Register Student</button>
+        </fieldset>
       </form>
     </div>
   );
-}
+};
 
 export default StudentRegistration;
+

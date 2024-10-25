@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   return (
-    <nav className="navigation">
-      <ul>
-        <li><Link to="/">Dashboard</Link></li>
-        <li><Link to="/students">Student List</Link></li>
-        <li><Link to="/register">Register Student</Link></li>
-      </ul>
+    <nav className="navbar">
+      <Link to="/" className="active" aria-current="page">Dashboard</Link>
+      <Link to="/students">Student List</Link>
+      <Link to="/register">Register Student</Link>
     </nav>
   );
 };
 
 export default Navigation;
+
+

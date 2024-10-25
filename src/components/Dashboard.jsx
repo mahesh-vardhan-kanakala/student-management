@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StudentContext } from '../context/StudentContext';  // Adjust the path as necessary
+import { StudentContext } from '../context/StudentContext'; 
 import { Link } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2'; 
 import {
@@ -24,7 +24,6 @@ const Dashboard = () => {
     return acc;
   }, {});
 
-  // Prepare data for chart
   const chartData = {
     labels: Object.keys(classDistribution),
     datasets: [
@@ -38,7 +37,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>Dashboard</h1>
+      {/* Navigation Bar */}
       <div className="stats">
         <div className="stat-card">
           <h2>Total Students</h2>
@@ -59,4 +58,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
