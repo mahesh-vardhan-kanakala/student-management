@@ -1,4 +1,3 @@
-/* General Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -6,55 +5,36 @@ body {
   background-color: #f4f4f4;
 }
 
-h1,
-h2 {
+h1, h2 {
   color: #333;
   margin: 0;
 }
 
-/* Container Styles */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Navbar Styles */
 .navbar {
   display: flex;
   justify-content: space-around;
   background-color: #007bff;
   padding: 10px;
-  overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar a {
-  display: block;
   color: #06024f;
-  text-align: center;
   padding: 14px 20px;
   text-decoration: none;
   font-weight: 500;
+  border-radius: 50px;
   transition: background-color 0.3s;
-  border-radius: 50px; /* Change to oval shape */
 }
 
 .navbar a:hover,
 .navbar a.active {
-  background-color: #0056b3;
-}
-
-.nav-link {
-  margin: 10px;
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 50px; /* Change to oval shape */
-}
-
-.nav-link:hover {
   background-color: #0056b3;
 }
 
@@ -68,7 +48,6 @@ h2 {
 
 .home h1 {
   font-size: 2.5em;
-  color: #333;
   margin-bottom: 20px;
 }
 
@@ -79,34 +58,28 @@ h2 {
   max-width: 600px;
 }
 
-.navigation-buttons {
-  display: flex;
-  gap: 20px;
-}
-
+/* Button Styles */
 .button-container {
-  display: flex;                /* Enable flexbox */
-  justify-content: center;      /* Center horizontally */
-  margin: 20px 0;              /* Add some space above and below */
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
 }
 
 .btn {
-  display: inline-block;        /* Ensure it's inline-block for flexbox centering */
-  padding: 10px 20px;          /* Button padding */
-  background-color: #007bff;   /* Button background color */
-  color: #fff;                  /* Button text color */
-  text-decoration: none;        /* Remove underline */
-  border-radius: 30px;         /* Rounded corners for oval shape */
-  font-weight: bold;            /* Bold text */
-  cursor: pointer;              /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Transition effect */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn:hover {
-  background-color: #0056b3;    /* Darker color on hover */
+  background-color: #0056b3;
 }
 
-/* Header Styles */
 .header {
   background-color: #1976d2;
   color: white;
@@ -115,7 +88,6 @@ h2 {
   align-items: center;
 }
 
-/* Sidebar Styles */
 .sidebar {
   width: 60px;
   background-color: white;
@@ -137,13 +109,11 @@ h2 {
   cursor: pointer;
 }
 
-/* Main Content Styles */
 .main-content {
   margin-left: 60px;
   padding: 20px;
 }
 
-/* Search Bar Styles */
 .search-bar {
   margin-bottom: 20px;
 }
@@ -151,18 +121,15 @@ h2 {
 .search-bar input {
   width: 100%;
   padding: 10px;
-  box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 4px; /* Keep it slightly rounded */
+  border-radius: 4px;
 }
 
-/* Class Title Styles */
 .class-title {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-/* Table Container Styles */
 .table-container {
   background-color: white;
   border-radius: 5px;
@@ -171,7 +138,6 @@ h2 {
   margin-top: 20px;
 }
 
-/* Table Styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -197,10 +163,9 @@ table tr:hover {
   background-color: #ddd;
 }
 
-/* Action Buttons Styles */
 .action-buttons {
   display: flex;
-  justify-content: flex-end; /* Aligns buttons to the right */
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -208,20 +173,16 @@ table tr:hover {
   text-decoration: none;
   color: #007bff;
   margin-right: 15px;
-  border-radius: 50px; /* Change to oval shape */
-}
-
-.action-buttons a:hover {
-  text-decoration: underline;
+  border-radius: 50px;
 }
 
 .action-buttons button {
   padding: 5px 10px;
-  border: none; /* Remove border for cleaner look */
+  border: none;
   background-color: #f4f4f4;
   cursor: pointer;
-  margin-left: auto; /* Pushes the button to the right */
-  border-radius: 50px; /* Change to oval shape */
+  margin-left: auto;
+  border-radius: 50px;
   transition: background-color 0.3s;
 }
 
@@ -229,15 +190,46 @@ table tr:hover {
   background-color: #ddd;
 }
 
-/* Styling for action buttons in StudentList */
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.registration-container,
+.edit-container {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 500px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+}
+
+.student-list {
+  margin: 20px 0;
+}
+
+.student-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
 .action-btn {
   margin-right: 10px;
   padding: 5px 10px;
-  text-decoration: none;
   color: white;
   background-color: #007bff;
   border: none;
-  border-radius: 50px; /* Change to oval shape */
+  border-radius: 50px;
   cursor: pointer;
 }
 
@@ -262,7 +254,7 @@ table tr:hover {
   padding: 10px 15px;
   margin: 0 5px;
   cursor: pointer;
-  border-radius: 50px; /* Change to oval shape */
+  border-radius: 50px;
   transition: background-color 0.3s;
 }
 
@@ -270,102 +262,24 @@ table tr:hover {
   background-color: #155a8a;
 }
 
-/* Input and Button Styles */
-input[type="text"],
-input[type="email"],
-input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px; /* Keep it slightly rounded */
-}
-
-.register {
-  background: linear-gradient(135deg, #4f46e5, #1976d2);
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 30px; 
-  text-align: center;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  width: 100%;
-}
-
-.register:hover {
-  background: linear-gradient(135deg, #1976d2, #4f46e5);
-  transform: translateY(-2px);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-.register:focus {
-  outline: 2px solid #fff; 
-  outline-offset: 2px;
-}
-
-.successMessage {
-  color: green; 
-  font-weight: bold;
-}
-
-.student-list {
-  margin: 20px 0; 
-}
-
-.student-list ul {
-  list-style-type: none; 
-  padding: 0; 
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end; 
-}
-
-.actions .delete-btn {
-  background-color: #ff4d4d; 
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.actions .delete-btn:hover {
-  background-color: #e60000; 
-}
-
-
-.registration-container {
-  margin: 20px auto;
-  padding: 20px;
-  max-width: 500px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive Styles */
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column; 
+    flex-direction: column;
   }
 
   .sidebar {
     width: 100%;
-    height: auto; 
-    position: relative; 
+    height: auto;
+    position: relative;
   }
 
   .main-content {
-    margin-left: 0; 
+    margin-left: 0;
   }
 
-  .home {
-    padding: 10px;
+  .button-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
+
