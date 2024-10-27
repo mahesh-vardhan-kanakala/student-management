@@ -14,7 +14,7 @@ ErrorMessage.propTypes = {
 const StudentRegistration = () => {
   const { addStudent } = useContext(StudentContext);
   const [student, setStudent] = useState({
-    ID:'',
+    ID: '',
     name: '',
     email: '',
     age: '',
@@ -33,7 +33,7 @@ const StudentRegistration = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setStudent((prevStudent) => ({ ...prevStudent, [name]: value }));
-    setError(''); 
+    setError('');
   };
 
   const validateForm = () => {
@@ -93,7 +93,7 @@ const StudentRegistration = () => {
           <h2>Register Student</h2>
 
           {error && <ErrorMessage message={error} />}
-          {success && <p className="successMessage">{success}</p>}
+          {success && <p className="success-message">{success}</p>}
           
           {Object.entries(student).map(([key, value]) => (
             <div className="Field" key={key}>

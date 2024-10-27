@@ -16,6 +16,7 @@ const StudentEdit = () => {
     phone: '',
     address: '',
   });
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     if (student) {
@@ -41,8 +42,11 @@ const StudentEdit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (student) {
-      updateStudent(formData); // Ensure updateStudent is defined correctly in your context
-      navigate(`/students/${formData.id}`); // Navigate to the new student ID
+      updateStudent(formData);
+      setSuccessMessage('Student successfully updated!');
+      setTimeout(() => {
+        navigate(`/students/${formData.id}`);
+      }, 2000);
     }
   };
 
@@ -53,6 +57,7 @@ const StudentEdit = () => {
   return (
     <form onSubmit={handleSubmit}>
       <h2>Edit Student</h2>
+      {successMessage && <p className="success-message">{successMessage}</p>}
       <div>
         <label htmlFor="id">ID:</label>
         <input
