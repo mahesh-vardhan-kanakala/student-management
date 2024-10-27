@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { StudentContext } from '../context/StudentContext'; 
-import { Link } from 'react-router-dom';
-import { Bar } from 'react-chartjs-2'; 
+import { StudentContext } from '../context/StudentContext';
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,32 +11,52 @@ import {
   Legend
 } from 'chart.js';
 
-// Register scales and elements
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Dashboard = () => {
   const { students } = useContext(StudentContext);
 
+  // Calculate total students and class distribution
   const totalStudents = students.length;
   const classDistribution = students.reduce((acc, student) => {
-    acc[student.class] = (acc[student.class] || 0) + 1;
+    const studentClass = student.class || 'Unassigned';
+    acc[studentClass] = (acc[studentClass] || 0) + 1;
     return acc;
   }, {});
 
+  // Define data for Bar chart
   const chartData = {
     labels: Object.keys(classDistribution),
     datasets: [
       {
-        label: 'Students per Class',
+        label: 'Number of Students',
         data: Object.values(classDistribution),
-        backgroundColor: 'rgba(75,192,192,0.6)',
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
       },
     ],
   };
 
+  // Chart options
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Student Distribution by Class',
+      },
+    },
+  };
+
   return (
     <div className="dashboard">
-      {/* Navigation Bar */}
+      <h1>Dashboard</h1>
+
       <div className="stats">
         <div className="stat-card">
           <h2>Total Students</h2>
@@ -48,11 +67,15 @@ const Dashboard = () => {
           <p>{Object.keys(classDistribution).length}</p>
         </div>
       </div>
+
       <div className="chart">
         <h2>Students per Class</h2>
-        <Bar data={chartData} />
+        <Bar data={chartData} options={chartOptions} />
       </div>
-      <Link to="/students" className="btn">View All Students</Link>
+
+      <div className="button-container">
+        <a href="/students" className="btn">View All Students</a>
+      </div>
     </div>
   );
 };

@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom';
 import { StudentContext } from '../context/StudentContext';
 
 function StudentList() {
-  const { students } = useContext(StudentContext);
+  const { students, deleteStudent } = useContext(StudentContext);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Filter students based on the search term
   const filteredStudents = students.filter(student =>
-    student?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    student.id.toString().includes(searchTerm)
   );
 
-  // Group students by class
   const groupedStudents = filteredStudents.reduce((acc, student) => {
-    const className = student.class || 'Unassigned'; // Group by class name
+    const className = student.class || 'Unassigned';
     if (!acc[className]) {
       acc[className] = [];
     }
@@ -25,15 +24,12 @@ function StudentList() {
 
   return (
     <div>
-      {/* Removed nav section */}
-
       <input
         type="text"
-        placeholder="Search students..."
+        placeholder="Search students by name or ID..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-
       {studentKeys.length > 0 ? (
         studentKeys.map((className) => (
           <section key={className}>
@@ -49,10 +45,12 @@ function StudentList() {
               <tbody>
                 {groupedStudents[className].map(student => (
                   <tr key={student.id}>
-                    <td>{student.name || 'N/A'}</td>
-                    <td>{student.email || 'N/A'}</td>
+                    <td>{student.name}</td>
+                    <td>{student.email}</td>
                     <td>
-                      <Link to={`/students/${student.id}`}>View</Link>
+                      <Link to={`/students/${student.id}`} className="action-btn">View</Link>
+                      <Link to={`/edit/${student.id}`} className="action-btn">Edit</Link>
+                      <button onClick={() => deleteStudent(student.id)} className="action-btn delete-btn">Delete</button>
                     </td>
                   </tr>
                 ))}

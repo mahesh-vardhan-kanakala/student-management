@@ -3,12 +3,10 @@ import { StudentContext } from '../context/StudentContext';
 import { useNavigate } from 'react-router-dom'; 
 import PropTypes from 'prop-types';
 
-// Error message component
 const ErrorMessage = ({ message }) => {
   return <p className="FieldError">{message}</p>;
 };
 
-// Prop types validation
 ErrorMessage.propTypes = {
   message: PropTypes.string.isRequired,
 };
@@ -16,6 +14,7 @@ ErrorMessage.propTypes = {
 const StudentRegistration = () => {
   const { addStudent } = useContext(StudentContext);
   const [student, setStudent] = useState({
+    ID:'',
     name: '',
     email: '',
     age: '',
@@ -24,6 +23,7 @@ const StudentRegistration = () => {
     phone: '',
   });
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [isTouched, setIsTouched] = useState({
     email: false,
     phone: false,
@@ -33,7 +33,7 @@ const StudentRegistration = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setStudent((prevStudent) => ({ ...prevStudent, [name]: value }));
-    setError(''); // Reset error on input change
+    setError(''); 
   };
 
   const validateForm = () => {
@@ -43,14 +43,12 @@ const StudentRegistration = () => {
       return 'Please fill in all fields';
     }
 
-    // Basic email validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
       return 'Please enter a valid email';
     }
 
-    // Phone number validation
-    const phonePattern = /^\d{10}$/; // Adjust according to your requirements
+    const phonePattern = /^\d{10}$/;
     if (!phonePattern.test(phone)) {
       return 'Please enter a valid 10-digit phone number';
     }
@@ -67,9 +65,13 @@ const StudentRegistration = () => {
       return;
     }
 
-    addStudent(student);
+    addStudent({ ...student });
     clearForm();
-    navigate('/success'); // Redirect to a success page
+    setSuccess('Student registered successfully!');
+    setTimeout(() => {
+      setSuccess('');
+      navigate('/students');
+    }, 3000);
   };
 
   const clearForm = () => {
@@ -91,8 +93,8 @@ const StudentRegistration = () => {
           <h2>Register Student</h2>
 
           {error && <ErrorMessage message={error} />}
+          {success && <p className="successMessage">{success}</p>}
           
-          {/** Form Fields */}
           {Object.entries(student).map(([key, value]) => (
             <div className="Field" key={key}>
               <label>
@@ -103,19 +105,16 @@ const StudentRegistration = () => {
                 name={key}
                 value={value}
                 onChange={handleChange}
-                onBlur={() => setIsTouched((prev) => ({ ...prev, [key]: true }))}
-                placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+                onBlur={() => setIsTouched({ ...isTouched, [key]: true })}
+                required={key === 'name'}
               />
-              {isTouched.email && key === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && (
-                <ErrorMessage message="Please enter a valid email" />
-              )}
-              {isTouched.phone && key === 'phone' && !/^\d{10}$/.test(value) && (
-                <ErrorMessage message="Please enter a valid 10-digit phone number" />
-              )}
+              {isTouched[key] && value.length === 0 && <ErrorMessage message="This field is required" />}
             </div>
           ))}
 
-          <button type="submit">Register Student</button>
+          <div className="button-container" style={{ textAlign: 'right' }}>
+            <button type="submit" className="action-btn">Register</button>
+          </div>
         </fieldset>
       </form>
     </div>
@@ -123,4 +122,3 @@ const StudentRegistration = () => {
 };
 
 export default StudentRegistration;
-
